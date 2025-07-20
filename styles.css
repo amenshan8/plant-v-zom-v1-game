@@ -1,0 +1,620 @@
+:root {
+    --tile-width: 80px;
+    --tile-height: 80px;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    background: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+.game-container {
+    position: relative;
+    background: #4a8505;
+    border: 4px solid #2d5104;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Top Bar */
+.top-bar {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.sun-counter {
+    background: #f7c342;
+    padding: 5px 15px;
+    border-radius: 20px;
+    color: #000;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.sun-icon {
+    width: 20px;
+    height: 20px;
+    background: #ffd700;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #ffd700;
+}
+
+.selected-plants {
+    display: flex;
+    gap: 10px;
+}
+
+/* Plant Slots */
+.plant-slot {
+    width: 60px;
+    height: 70px;
+    background: #4a6855;
+    border: 2px solid #2d5104;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.plant-slot::after {
+    position: absolute;
+    bottom: 5px;
+    color: white;
+    font-size: 14px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 2px 6px;
+    border-radius: 10px;
+}
+
+.plant-slot.sunflower::after { content: '50☀️'; }
+.plant-slot.peashooter::after { content: '100☀️'; }
+.plant-slot.wallnut::after { content: '50☀️'; }
+.plant-slot.potatoMine::after { content: '25☀️'; }
+.plant-slot.snowPea::after { content: '175☀️'; }
+.plant-slot.repeater::after { content: '200☀️'; }
+.plant-slot.splitPea::after { content: '125☀️'; }
+
+/* Play Area */
+.play-area {
+    display: flex;
+}
+
+/* Lawn Grid */
+.lawn {
+    display: grid;
+    grid-template-rows: repeat(5, var(--tile-height));
+    grid-template-columns: repeat(9, var(--tile-width));
+    gap: 2px;
+    background: #2d5104;
+    padding: 2px;
+}
+
+.tile {
+    background: #65b807;
+    position: relative;
+    transition: background-color 0.2s;
+    border-radius: 2px;
+    overflow: visible;
+}
+
+.tile:hover {
+    background: #76d409;
+    cursor: pointer;
+}
+
+/* Cemetery */
+.cemetery {
+    display: grid;
+    grid-template-rows: repeat(5, var(--tile-height));
+    grid-template-columns: repeat(2, var(--tile-width));
+    gap: 2px;
+    background: #2d5104;
+    padding: 2px;
+    margin-left: 10px;
+}
+
+.cemetery-tile {
+    background: #4a4a4a;
+    position: relative;
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Tombstone */
+.tombstone {
+    width: 30px;
+    height: 40px;
+    background: #666;
+    border-radius: 15px 15px 0 0;
+    position: relative;
+}
+
+.tombstone::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: -5px;
+    width: 40px;
+    height: 10px;
+    background: #666;
+    border-radius: 5px;
+}
+
+/* Falling Sun */
+.falling-sun {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: #ffd700;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 15px #ffd700;
+    animation: glow 1s ease-in-out infinite alternate;
+    transition: transform 0.2s;
+}
+
+.falling-sun:hover {
+    transform: scale(1.1);
+}
+
+/* Plant Selection Modal */
+.plant-selection {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    z-index: 100;
+}
+
+.plant-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    gap: 10px;
+    max-width: 420px;
+}
+
+.plant-card {
+    width: 100px;
+    height: 120px;
+    background: #4a6855;
+    border: 2px solid #2d5104;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.plant-card:hover {
+    transform: scale(1.05);
+    background: #557761;
+}
+
+/* Plant Card Styles */
+.plant-card img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+}
+
+.plant-card.sunflower {
+    background-image: linear-gradient(to bottom, #FFD700, #FFA500);
+}
+
+.plant-card.peashooter {
+    background-image: linear-gradient(to bottom, #7FBF7F, #4A944A);
+}
+
+.plant-card.wallnut {
+    background-image: linear-gradient(to bottom, #8B4513, #654321);
+}
+
+.plant-card.potatoMine {
+    background-image: linear-gradient(to bottom, #8B4513, #654321);
+}
+
+.plant-card.shovel {
+    background-image: linear-gradient(to bottom, #666666, #333333);
+}
+
+.plant-card.snowPea {
+    background-image: linear-gradient(to bottom, #87CEEB, #4169E1);
+}
+
+.plant-card.repeater {
+    background-image: linear-gradient(to bottom, #228B22, #006400);
+}
+
+.plant-card.splitPea {
+    background-image: linear-gradient(to bottom, #32CD32, #228B22);
+}
+
+/* Buttons */
+.start-button, .hitbox-toggle, .cheat-button {
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.start-button {
+    padding: 10px 30px;
+    font-size: 18px;
+    background: #4a8505;
+    color: white;
+}
+
+.start-button:hover {
+    background: #5ca306;
+}
+
+.hitbox-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #4a8505;
+    color: white;
+    padding: 5px 10px;
+}
+
+.hitbox-toggle:hover {
+    background: #5ca306;
+}
+
+.cheat-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #e84393;
+    color: white;
+    padding: 8px 16px;
+}
+
+.cheat-button:hover {
+    background: #fd79a8;
+}
+
+/* Tile Pattern Overlay */
+.tile::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(0,0,0,0.1) 10px,
+        rgba(0,0,0,0.1) 20px
+    );
+}
+
+/* Plant Elements */
+[class$="-plant"] {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 65px;
+    height: 65px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+[class$="-plant"] img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Zombie Elements */
+.zombie {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 90px;
+    height: 90px;
+    z-index: 10;
+    transition: left 5s linear;
+}
+
+.zombie-health-bar {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 5px;
+    background: #333;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.zombie-health-fill {
+    height: 100%;
+    width: 100%;
+    background: #ff3333;
+    transition: width 0.3s;
+}
+
+/* Projectiles */
+.pea, .frozen-pea {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    z-index: 5;
+    transition: left 1.5s linear;
+    transform: translateY(-10px);
+}
+
+.pea {
+    background: #4CAF50;
+    border: 2px solid #2E7D32;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.frozen-pea {
+    background: #87CEEB;
+    border: 2px solid #4169E1;
+    box-shadow: 0 0 5px #87CEEB;
+}
+
+/* Animation Keyframes */
+@keyframes glow {
+    from { box-shadow: 0 0 10px #ffd700; }
+    to { box-shadow: 0 0 20px #ffd700, 0 0 30px #ff8c00; }
+}
+
+@keyframes shootForward {
+    0% { transform: translate(-50%, -50%) scaleX(1); }
+    15% { transform: translate(-50%, -50%) scaleX(1.2); }
+    30% { transform: translate(-50%, -50%) scaleX(1); }
+    100% { transform: translate(-50%, -50%) scaleX(1); }
+}
+
+@keyframes shootBackward {
+    0% { transform: translate(-50%, -50%) scaleX(1); }
+    15% { transform: translate(-50%, -50%) scaleX(-1.2); }
+    30% { transform: translate(-50%, -50%) scaleX(-1); }
+    100% { transform: translate(-50%, -50%) scaleX(-1); }
+}
+
+/* Hitbox Mode */
+.hitbox-mode .peashooter-plant { outline: 2px solid #00ff00; }
+.hitbox-mode .sunflower-plant { outline: 2px solid #ffff00; }
+.hitbox-mode .wallnut-plant { outline: 2px solid #964B00; }
+.hitbox-mode .potatoMine-plant { outline: 2px solid #ff0000; }
+.hitbox-mode .zombie { outline: 2px solid #ff00ff; }
+.hitbox-mode .pea { outline: 2px solid #00ff00; }
+
+/* Game Over Screen */
+.game-over {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.game-over img {
+    max-width: 90%;
+    max-height: 90vh;
+    object-fit: contain;
+}
+
+/* Recharge Animation */
+.plant-slot.selected {
+    box-shadow: 0 0 10px #fff;
+}
+
+.plant-slot.recharging::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    z-index: 2;
+}
+
+.recharge-timer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 20px;
+    z-index: 3;
+}
+
+/* Shovel Cursor */
+.shovel-cursor {
+    cursor: url('shovel.png'), auto;
+}
+
+/* Wave Progress */
+.wave-progress-container {
+    width: 100%;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.wave-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ff6b6b, #ff4757);
+    border-radius: 10px;
+    transition: width 0.3s;
+}
+
+.wave-info {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px black;
+    z-index: 1;
+}
+
+/* Super Wave Warning */
+.super-wave-warning {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    animation: pulse 1s infinite;
+    z-index: 1000;
+}
+
+@keyframes pulse {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.1); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Intro Animation */
+.intro-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #000000, #1a1a1a);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.intro-content {
+    text-align: center;
+    animation: fadeInUp 2s ease-out;
+}
+
+.intro-title {
+    font-size: 48px;
+    color: #00ff00;
+    text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00;
+    margin-bottom: 20px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    animation: glowPulse 1.5s ease-in-out infinite alternate;
+}
+
+.intro-subtitle {
+    font-size: 24px;
+    color: #ffffff;
+    text-shadow: 0 0 10px #ffffff;
+    margin: 10px 0;
+    opacity: 0;
+    animation: fadeIn 1s ease-out 0.8s forwards;
+}
+
+.team-name {
+    font-size: 36px;
+    color: #00ffff;
+    text-shadow: 0 0 15px #00ffff;
+    margin-top: 20px;
+    letter-spacing: 2px;
+    opacity: 0;
+    animation: fadeIn 1s ease-out 1.2s forwards;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes glowPulse {
+    from {
+        text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00;
+    }
+    to {
+        text-shadow: 0 0 30px #00ff00, 0 0 50px #00ff00, 0 0 60px #00ff00;
+    }
+}
+
+/* Credits */
+.dev-credits {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    text-align: center;
+    color: #00ff00;
+    text-shadow: 0 0 10px #00ff00;
+    font-size: 14px;
+}
+
+.dev-credits h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.dev-credits p {
+    margin: 2px 0;
+    font-size: 12px;
+}

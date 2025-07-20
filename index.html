@@ -1,0 +1,100 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Plants vs Zombies - Browser Edition</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Intro Overlay -->
+    <div class="intro-overlay" id="intro-overlay">
+        <div class="intro-content">
+            <div class="intro-title">Developed & Designed by</div>
+            <div class="intro-subtitle">Amin Shan</div>
+            <div class="team-name">Team Devs of Tomorrow</div>
+        </div>
+    </div>
+
+    <div class="game-container">
+        <!-- Wave Progress Bar -->
+        <div class="wave-progress-container">
+            <div class="wave-progress-bar"></div>
+            <div class="wave-info">Wave 1</div>
+        </div>
+        
+        <!-- Cheat Button -->
+        <button class="cheat-button" id="cheat-button">Cheat: 9999 Sun</button>
+        
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="sun-counter">
+                <div class="sun-icon"></div>
+                <span id="sun-amount">50</span>
+            </div>
+            <div class="selected-plants" id="selected-plants">
+                <div class="plant-slot" data-slot="0"></div>
+                <div class="plant-slot" data-slot="1"></div>
+                <div class="plant-slot" data-slot="2"></div>
+                <div class="plant-slot" data-slot="3"></div>
+                <div class="plant-slot" data-slot="4"></div>
+                <div class="plant-slot" data-slot="5"></div>
+            </div>
+        </div>
+
+        <!-- Game Board -->
+        <div class="play-area">
+            <div class="lawn" id="lawn"></div>
+            <div class="cemetery" id="cemetery"></div>
+        </div>
+
+        <!-- Plant Selection Modal -->
+        <div class="plant-selection" id="plant-selection">
+            <div class="plant-grid">
+                <div class="plant-card sunflower" data-plant="sunflower">
+                    <img alt="cartoon sunflower with a smiling face" src="sunflower.png" width="70" height="70">
+                </div>
+                <div class="plant-card peashooter" data-plant="peashooter">
+                    <img alt="green plant that shoots peas" src="peashooter.png" width="70" height="70">
+                </div>
+                <div class="plant-card wallnut" data-plant="wallnut">
+                    <img alt="brown defensive nut with worried expression" src="wall-nut.png" width="70" height="70">
+                </div>
+                <div class="plant-card potatoMine" data-plant="potatoMine">
+                    <img alt="brown potato mine with a red detonator" src="potato-mine-unarmed.png" width="70" height="70">
+                </div>
+                <div class="plant-card shovel" data-plant="shovel">
+                    <img alt="shovel tool for removing plants" src="shovel.png" width="70" height="70">
+                </div>
+                <div class="plant-card snowPea" data-plant="snowPea">
+                    <img alt="snow pea plant" src="Snow Pea.png" width="70" height="70">
+                </div>
+                <div class="plant-card repeater" data-plant="repeater">
+                    <img alt="repeater plant" src="Repeater.png" width="70" height="70">
+                </div>
+                <div class="plant-card splitPea" data-plant="splitPea">
+                    <img alt="split pea plant" src="Split Pea.png" width="70" height="70">
+                </div>
+                <!-- Empty slots -->
+                <div class="plant-card"></div>
+                <div class="plant-card"></div>
+                <div class="plant-card"></div>
+                <div class="plant-card"></div>
+                <div class="plant-card"></div>
+                <div class="plant-card"></div>
+                <div class="plant-card"></div>
+                <div class="plant-card"></div>
+            </div>
+            <button class="hitbox-toggle" id="hitbox-toggle">Hitbox View Mode: OFF</button>
+            <button class="start-button" id="start-button">Let's Rock!</button>
+        </div>
+    </div>
+
+    <!-- Credits -->
+    <div class="dev-credits">
+        <h3>Developed & Designed by</h3>
+        <p>Amin Shan</p>
+        <p>Team Devs of Tomorrow</p>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
